@@ -13,7 +13,7 @@ locals {
 ################################################################################
 
 module "eks" {
-  source = "../terraform_modules/eks/"
+  source = "../terraform_modules/eks"
 
   cluster_name    = local.name
   cluster_version = local.cluster_version
@@ -25,9 +25,7 @@ module "eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
 
-  # You require a node group to schedule coredns which is critical for running correctly internal DNS.
-  # If you want to use only fargate you must follow docs `(Optional) Update CoreDNS`
-  # available under https://docs.aws.amazon.com/eks/latest/userguide/fargate-getting-started.html
+  
   node_groups = {
     example = {
       desired_capacity = 1
@@ -80,8 +78,6 @@ module "eks" {
           namespace = "default"
           labels = {
             Environment = "test"
-            GithubRepo  = "terraform-aws-eks"
-            GithubOrg   = "terraform-aws-modules"
           }
         }
       ]
@@ -111,7 +107,7 @@ module "fargate_profile_existing_cluster" {
   source = "../terraform_modules/fargate"
 
   cluster_name = module.eks.cluster_id
-  subnets      = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
+  subnets      = ["subnet-08abb19f82387f0c6", "subnet-038dcee6be2f5b138"]
 
   fargate_profiles = {
     profile1 = {
