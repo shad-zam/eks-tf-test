@@ -145,7 +145,7 @@ module "fargate_profile_existing_cluster" {
       ]
 
       # Using specific subnets instead of the ones configured in EKS (`subnets` and `fargate_subnets`)
-      subnets = [module.vpc.private_subnets[0]]
+      subnets = [subnet-038dcee6be2f5b138]
 
       tags = {
         Owner     = "profile2"
