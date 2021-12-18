@@ -13,7 +13,7 @@ locals {
 ################################################################################
 
 module "eks" {
-  source = "../../terraform_modules/eks/"
+  source = "../terraform_modules/eks/"
 
   cluster_name    = local.name
   cluster_version = local.cluster_version
@@ -108,7 +108,7 @@ module "eks" {
 ##############################################
 
 module "fargate_profile_existing_cluster" {
-  source = "../../terraform_modules/fargate"
+  source = "../terraform_modules/fargate"
 
   cluster_name = module.eks.cluster_id
   subnets      = [module.vpc.private_subnets[0], module.vpc.private_subnets[2]]
